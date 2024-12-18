@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .active {
+  background: none !important;
+  color: #ce713d !important;
+  border-bottom: 2px solid #ce713d !important;
+  border-radius: 0 !important;
+  font-size: 16px !important;
+  transition: 2s !important;
+}
+
+.active::after {
+  content: "" !important;
+  width: 10px !important;
+} */
