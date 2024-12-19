@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
+import Logo from "../Logo";
 
 const Navbar = () => {
   const navList = [
@@ -59,16 +60,7 @@ const Navbar = () => {
             })}
           </ul>
         </div>
-        <Link to="/" className="flex items-center gap-2 ">
-          <img
-            className="w-10 h-10 rounded-full"
-            src="/src/assets/logo.jpg"
-            alt=""
-          />
-          <h1 className="uppercase  bg-gradient-to-r from-secondary-color  to-text-color text-transparent bg-clip-text font-bold text-base md:text-xl">
-            sutter studio
-          </h1>
-        </Link>
+        <Logo />
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="flex gap-4 px-1">
@@ -87,7 +79,26 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <div className="dropdown dropdown-bottom dropdown-end">
+          <div tabIndex={0} role="button">
+            <div className="avatar">
+              <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+              </div>
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          >
+            <li>
+              <a>Item 1</a>
+            </li>
+            <li>
+              <a>Item 2</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
   );
