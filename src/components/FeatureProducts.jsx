@@ -18,15 +18,15 @@ const FeatureProducts = () => {
           </div>
         </div>
         <div className="lg:col-span-3 col-span-12  gap-2 order-1 lg:order-2">
-          <div className=" grid grid-cols-12 gap-2">
+          <div className=" grid grid-cols-12 gap-2 h-full ">
             {" "}
             <img
-              className="col-span-6 lg:col-span-12 shadow-lg shadow-secondary-color"
+              className="col-span-6 w-full h-full object-cover border-2 border-secondary-color rounded-lg lg:col-span-12 shadow-lg shadow-secondary-color"
               src={sidebanner1}
               alt="sidebanner"
             />
             <img
-              className="col-span-6 lg:col-span-12 shadow-lg shadow-secondary-color"
+              className="col-span-6 w-full h-full object-cover border-2 border-secondary-color rounded-lg lg:col-span-12 shadow-lg shadow-secondary-color"
               src={sidebanner2}
               alt="sidebanner"
             />
