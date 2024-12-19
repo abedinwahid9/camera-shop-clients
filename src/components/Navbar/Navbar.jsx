@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <header className="navbar container mx-auto ">
-      <div className="navbar-start">
+      <div className="navbar-start md:w-1/2 w-full ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -59,13 +59,13 @@ const Navbar = () => {
             })}
           </ul>
         </div>
-        <Link className="flex items-center gap-2 ">
+        <Link to="/" className="flex items-center gap-2 ">
           <img
             className="w-10 h-10 rounded-full"
             src="/src/assets/logo.jpg"
             alt=""
           />
-          <h1 className="uppercase  bg-gradient-to-r from-secondary-color  to-text-color text-transparent bg-clip-text font-bold text-xl">
+          <h1 className="uppercase  bg-gradient-to-r from-secondary-color  to-text-color text-transparent bg-clip-text font-bold text-base md:text-xl">
             sutter studio
           </h1>
         </Link>
