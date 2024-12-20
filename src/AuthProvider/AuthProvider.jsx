@@ -8,8 +8,9 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { app } from "../firebase/firebase_config";
-import axios from "axios";
+import { app } from "../Firebase/firebase_config";
+
+// import axios from "axios";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -42,16 +43,16 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        axios
-          .post(`http://localhost:4000/authentication`, {
-            email: currentUser.email,
-          })
-          .then((data) => {
-            if (data.data) {
-              localStorage.setItem("access-token", data?.data?.token);
-              setLoading(false);
-            }
-          });
+        // axios
+        //   .post(`http://localhost:4000/authentication`, {
+        //     email: currentUser.email,
+        //   })
+        //   .then((data) => {
+        //     if (data.data) {
+        //       localStorage.setItem("access-token", data?.data?.token);
+        //       setLoading(false);
+        //     }
+        //   });
       } else {
         localStorage.removeItem("access-token");
         setLoading(false);

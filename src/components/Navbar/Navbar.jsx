@@ -1,10 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import Logo from "../Logo";
+
+import useAuth from "../../hooks/useAuth";
 import Button from "../share/Button";
 
 const Navbar = () => {
-  const user = false;
+  const { user, LogOut } = useAuth();
 
   const navList = [
     {
@@ -93,13 +95,16 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              className="dropdown-content menu bg-base-100 rounded-box z-[1]  p-2 shadow"
             >
               <li>
-                <a>Item 1</a>
+                <p>{user.email}</p>
               </li>
               <li>
-                <a>Item 2</a>
+                <Link>Dashboard</Link>
+              </li>
+              <li onClick={() => LogOut()}>
+                <Button title="logout" />
               </li>
             </ul>
           </div>
