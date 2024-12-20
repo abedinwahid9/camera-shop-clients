@@ -4,6 +4,7 @@ import { TbEye, TbEyeOff } from "react-icons/tb";
 import { CiLogin } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { MdAlternateEmail } from "react-icons/md";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
