@@ -101,7 +101,7 @@ const Navbar = () => {
                 <p>{user.email}</p>
               </li>
               <li>
-                <Link>Dashboard</Link>
+                <Link to="/dashboard/overview">Dashboard</Link>
               </li>
               <li onClick={() => LogOut()}>
                 <Button title="logout" />
