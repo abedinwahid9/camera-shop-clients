@@ -17,8 +17,8 @@ const Navbar = () => {
       link: "/about",
     },
     {
-      title: "contact",
-      link: "/contact",
+      title: "contact us",
+      link: "/contact-us",
     },
   ];
 
@@ -82,7 +82,7 @@ const Navbar = () => {
         <div className="dropdown dropdown-bottom dropdown-end">
           <div tabIndex={0} role="button">
             <div className="avatar">
-              <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+              <div className="ring-secondary-color ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
                 <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
               </div>
             </div>

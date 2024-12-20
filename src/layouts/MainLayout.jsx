@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="overflow-hidden">
       <div className="bg-gradient-to-bl from-primary-color  to-optional-color">
         <Navbar />
       </div>

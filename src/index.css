@@ -2,16 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .active {
-  background: none !important;
-  color: #ce713d !important;
-  border-bottom: 2px solid #ce713d !important;
-  border-radius: 0 !important;
-  font-size: 16px !important;
-  transition: 2s !important;
+::-webkit-scrollbar {
+  width: 4px;
+  cursor: pointer;
 }
 
-.active::after {
-  content: "" !important;
-  width: 10px !important;
-} */
+::-webkit-scrollbar-track {
+  background: #ffffff3a;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0a2117;
+  border-radius: 20px;
+}
