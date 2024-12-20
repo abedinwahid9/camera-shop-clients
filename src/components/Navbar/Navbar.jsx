@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import Logo from "../Logo";
+import Button from "../share/Button";
 
 const Navbar = () => {
+  const user = false;
+
   const navList = [
     {
       title: "home",
@@ -79,26 +82,35 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-bottom dropdown-end">
-          <div tabIndex={0} role="button">
-            <div className="avatar">
-              <div className="ring-secondary-color ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        {user ? (
+          <div className="dropdown dropdown-bottom dropdown-end">
+            <div tabIndex={0} role="button">
+              <div className="avatar">
+                <div className="ring-secondary-color ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                </div>
               </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li>
+                <a>Item 1</a>
+              </li>
+              <li>
+                <a>Item 2</a>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+        ) : (
+          <Link
+            to="/login"
+            className="bg-secondary-color py-2 px-5 rounded-lg text-white font-semibold uppercase hover:bg-optional-color hover:border-secondary-color hover:border-2"
           >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Item 2</a>
-            </li>
-          </ul>
-        </div>
+            Login
+          </Link>
+        )}
       </div>
     </header>
   );
