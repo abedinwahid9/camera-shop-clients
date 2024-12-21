@@ -6,11 +6,13 @@ import {
   FaSignOutAlt,
   FaBars,
   FaTimes,
+  FaHome,
 } from "react-icons/fa";
 
 import useData from "../../../hooks/useData";
 import { NavLink } from "react-router-dom";
 import Logo from "../../Logo";
+import { LuLibraryBig } from "react-icons/lu";
 
 const Sidebar = () => {
   const { toggleSidebar, setToggleSidebar } = useData();
@@ -46,20 +48,20 @@ const Sidebar = () => {
             <FaBars className="h-5 w-5 mr-3" />
             Dashboard
           </NavLink>
+          <NavLink to="/dashboard/users" className={getNavLinkClass}>
+            <FaUsers className="h-5 w-5 mr-3" />
+            Users
+          </NavLink>
           <NavLink to="/dashboard/add-product" className={getNavLinkClass}>
             <FaShoppingCart className="h-5 w-5 mr-3" />
             Add Product
           </NavLink>
-          <NavLink to="/users" className={getNavLinkClass}>
-            <FaUsers className="h-5 w-5 mr-3" />
-            Users
-          </NavLink>
-          <NavLink to="/all-products" className={getNavLinkClass}>
-            <FaChartBar className="h-5 w-5 mr-3" />
+          <NavLink to="/dashboard/all-products" className={getNavLinkClass}>
+            <LuLibraryBig className="h-5 w-5 mr-3" />
             All Products
           </NavLink>
           <NavLink to="/" className={getNavLinkClass}>
-            <FaCogs className="h-5 w-5 mr-3" />
+            <FaHome className="h-5 w-5 mr-3" />
             Home
           </NavLink>
         </nav>

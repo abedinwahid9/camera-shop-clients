@@ -23,8 +23,8 @@ const Products = () => {
       <AdsSection firstAds={secondeAds} />
       <div className="md:px-5 px-2">
         <Title title="our products" />
-        <div className="flex justify-between gap-3">
-          <label className="focus-within:!outline-primary-color input lg:w-1/4 w-1/2  input-bordered border-secondary-color flex items-center gap-2">
+        <div className="flex justify-between md:flex-row flex-col gap-3">
+          <label className="focus-within:!outline-primary-color input lg:w-1/4 md:w-1/2 w-full input-bordered border-secondary-color flex items-center gap-2">
             <input type="text" className="grow " placeholder="Search" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -39,20 +39,20 @@ const Products = () => {
               />
             </svg>
           </label>
-          <select className="focus-within:!outline-primary-color select select-bordered border-secondary-color lg:w-1/4 w-1/2">
+          <select className="focus-within:!outline-primary-color select select-bordered border-secondary-color lg:w-1/4 md:w-1/2 w-full">
             <option>low price to high price</option>
             <option>high price to low price</option>
           </select>
         </div>
         <div className="pt-5 flex gap-2 flex-wrap justify-center">
-          <div className="btn border-secondary-color bg-secondary-color text-white font-semibold text-lg hover:bg-optional-color">
+          <div className="btn border-secondary-color bg-secondary-color text-white font-semibold md:text-lg text-sm hover:bg-optional-color">
             All
           </div>
           {allCategory?.map((category, i) => {
             return (
               <div
                 key={i}
-                className="btn capitalize border-secondary-color bg-secondary-color text-white font-semibold text-lg hover:bg-optional-color"
+                className="btn capitalize border-secondary-color bg-secondary-color text-white font-semibold md:text-lg text-sm hover:bg-optional-color"
               >
                 {category}
               </div>

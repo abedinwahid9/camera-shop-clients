@@ -4,6 +4,8 @@ import Logo from "../Logo";
 
 import useAuth from "../../hooks/useAuth";
 import Button from "../share/Button";
+import { FaCartArrowDown, FaRegHeart } from "react-icons/fa";
+import { RiDashboardLine } from "react-icons/ri";
 
 const Navbar = () => {
   const { user, LogOut } = useAuth();
@@ -84,38 +86,57 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {user ? (
-          <div className="dropdown dropdown-bottom dropdown-end">
-            <div tabIndex={0} role="button">
-              <div className="avatar">
-                <div className="ring-secondary-color ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <div className="flex justify-center items-center gap-5">
+          <div className="flex">
+            <Link to="/cart">
+              <div className="badge bg-secondary-color text-white border-secondary-color font-semibold">
+                +99
+              </div>
+              <FaCartArrowDown className="text-3xl font-bold text-secondary-color" />
+            </Link>
+          </div>
+          {user ? (
+            <div className="dropdown dropdown-bottom dropdown-end">
+              <div tabIndex={0} role="button">
+                <div className="avatar">
+                  <div className="ring-secondary-color ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  </div>
                 </div>
               </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] gap-2 p-2 shadow"
+              >
+                <li>
+                  <p>{user.email}</p>
+                </li>
+                <li>
+                  <Link to="/dashboard/overview">
+                    <RiDashboardLine className="text-secondary-color  text-xl" />
+                    <p>Dashboard</p>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/overview">
+                    <FaRegHeart className="text-secondary-color  text-xl" />{" "}
+                    <p>Wishlist</p>
+                  </Link>
+                </li>
+                <li onClick={() => LogOut()}>
+                  <Button title="logout" />
+                </li>
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1]  p-2 shadow"
+          ) : (
+            <Link
+              to="/login"
+              className="bg-secondary-color py-2 px-5 rounded-lg text-white font-semibold uppercase hover:bg-optional-color hover:border-secondary-color hover:border-2"
             >
-              <li>
-                <p>{user.email}</p>
-              </li>
-              <li>
-                <Link to="/dashboard/overview">Dashboard</Link>
-              </li>
-              <li onClick={() => LogOut()}>
-                <Button title="logout" />
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <Link
-            to="/login"
-            className="bg-secondary-color py-2 px-5 rounded-lg text-white font-semibold uppercase hover:bg-optional-color hover:border-secondary-color hover:border-2"
-          >
-            Login
-          </Link>
-        )}
+              Login
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );
