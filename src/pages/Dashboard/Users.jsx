@@ -17,7 +17,12 @@ const Users = () => {
             <th>1</th>
             <td>Cy Ganderton</td>
             <td>Quality Control Specialist</td>
-            <td>Blue</td>
+            <td>
+              <select className="select select-sm  ">
+                <option>buyer</option>
+                <option>seller</option>
+              </select>
+            </td>
           </tr>
           {/* row 2 */}
           <tr>

@@ -2,17 +2,19 @@ import { useState } from "react";
 import { FaCamera, FaLock, FaUserAlt } from "react-icons/fa";
 import { TbEye, TbEyeOff } from "react-icons/tb";
 import { CiLogin } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdAlternateEmail } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import GoogleAuth from "../components/share/GoogleAuth.jsx";
+import useAxiosPublic from "../hooks/useAxiosPublic.jsx";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [buyerHandle, setBuyerHandle] = useState(true);
   const { CreateUser } = useAuth();
+  const useAxios = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -20,17 +22,23 @@ const Register = () => {
     reset,
     watch,
   } = useForm();
+  const navigate = useNavigate();
 
   const handleForm = (data) => {
+    const name = data.name;
     const email = data.email;
     const role = data.role;
     const status = role === "buyer" ? "approved" : "pending";
     const wishlist = [];
 
-    const userData = { email, role, status, wishlist };
+    const userData = { name, email, role, status, wishlist };
 
-    CreateUser(email, data.password).then((user) => {
-      console.log(user);
+    CreateUser(email, data.password).then(async (user) => {
+      if (user.user) {
+        const res = await useAxios.post("/users", userData);
+        reset();
+        navigate("/");
+      }
     });
   };
 
@@ -67,7 +75,7 @@ const Register = () => {
           <form className="space-y-6" onSubmit={handleSubmit(handleForm)}>
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
                 Name
