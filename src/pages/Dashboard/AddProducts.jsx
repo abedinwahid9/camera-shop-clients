@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/share/Button";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -9,6 +8,7 @@ const AddProducts = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   // const [images, setImages] = useState([]);
   const useAxios = useAxiosPublic();
@@ -35,7 +35,10 @@ const AddProducts = () => {
     };
 
     const res = await useAxios.post("/products", { ...product, user });
-    console.log(res);
+    if (res.status === 201) {
+      reset();
+      console.log(res);
+    }
   };
 
   // const handleImageChange = (e) => {
@@ -81,9 +84,9 @@ const AddProducts = () => {
             <option disabled value="">
               Select a category
             </option>
-            <option value="electronics">Camera</option>
-            <option value="clothing">tools</option>
-            <option value="books">accessories</option>
+            <option value="camera">Camera</option>
+            <option value="tools">tools</option>
+            <option value="accessories">accessories</option>
             {/* Add more categories as needed */}
           </select>
           {errors.category && (
@@ -106,12 +109,12 @@ const AddProducts = () => {
             {...register("brand", { required: "Brand is required" })}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option disabled value="">
+            <option disabled value="all">
               Select a Brand
             </option>
-            <option value="electronics">Canon</option>
-            <option value="clothing">Nekon</option>
-            <option value="books">Sony</option>
+            <option value="canon">Canon</option>
+            <option value="nekon">Nekon</option>
+            <option value="sony">Sony</option>
             {/* Add more categories as needed */}
           </select>
           {errors.brand && (
@@ -171,7 +174,7 @@ const AddProducts = () => {
           id="description"
           {...register("description", {
             required: "Description is required",
-            maxLength: 100,
+            maxLength: 255,
           })}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-20"
         ></textarea>
@@ -179,6 +182,9 @@ const AddProducts = () => {
           <p className="text-red-500 text-xs italic">
             {errors.description.message}
           </p>
+        )}
+        {errors.description?.type === "maxLength" && (
+          <p className="text-red-500 text-xs italic">text length limit 255</p>
         )}
       </div>
       <div className="mb-4">
