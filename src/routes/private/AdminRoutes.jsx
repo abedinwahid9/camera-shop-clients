@@ -1,21 +1,22 @@
-/* eslint-disable react/prop-types */
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../pages/Loading/Loading";
+import useUserData from "../../hooks/useUserData";
 
-const PrivateRoutes = ({ children }) => {
+const AdminRoutes = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
+  const userData = useUserData();
 
-  if (loading) {
+  if (loading || !userData?.role) {
     return <Loading />;
   }
 
-  if (user) {
+  if (user && userData?.role === "admin") {
     return children;
   }
 
   return <Navigate to="/" state={{ from: location }} replace />;
 };
 
-export default PrivateRoutes;
+export default AdminRoutes;

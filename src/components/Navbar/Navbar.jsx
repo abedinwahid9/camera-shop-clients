@@ -6,9 +6,12 @@ import useAuth from "../../hooks/useAuth";
 import Button from "../share/Button";
 import { FaCartArrowDown, FaRegHeart } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
+import useUserData from "../../hooks/useUserData";
 
 const Navbar = () => {
   const { user, LogOut } = useAuth();
+  const userData = useUserData();
+  const role = userData?.role !== "buyer";
 
   const navList = [
     {
@@ -111,18 +114,23 @@ const Navbar = () => {
                 <li>
                   <p>{user.email}</p>
                 </li>
-                <li>
-                  <Link to="/dashboard/overview">
-                    <RiDashboardLine className="text-secondary-color  text-xl" />
-                    <p>Dashboard</p>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/dashboard/overview">
-                    <FaRegHeart className="text-secondary-color  text-xl" />{" "}
-                    <p>Wishlist</p>
-                  </Link>
-                </li>
+                {role && (
+                  <li>
+                    <Link to="/dashboard/overview">
+                      <RiDashboardLine className="text-secondary-color  text-xl" />
+                      <p>Dashboard</p>
+                    </Link>
+                  </li>
+                )}
+
+                {!role && (
+                  <li>
+                    <Link to="/dashboard/overview">
+                      <FaRegHeart className="text-secondary-color  text-xl" />{" "}
+                      <p>Wishlist</p>
+                    </Link>
+                  </li>
+                )}
                 <li onClick={() => LogOut()}>
                   <Button title="logout" />
                 </li>

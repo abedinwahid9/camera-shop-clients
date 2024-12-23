@@ -13,9 +13,12 @@ import useData from "../../../hooks/useData";
 import { NavLink } from "react-router-dom";
 import Logo from "../../Logo";
 import { LuLibraryBig } from "react-icons/lu";
+import useUserData from "../../../hooks/useUserData";
 
 const Sidebar = () => {
   const { toggleSidebar, setToggleSidebar } = useData();
+
+  const user = useUserData();
 
   const toggleSidebarClose = () => {
     setToggleSidebar(!toggleSidebar);
@@ -48,18 +51,24 @@ const Sidebar = () => {
             <FaBars className="h-5 w-5 mr-3" />
             Dashboard
           </NavLink>
-          <NavLink to="/dashboard/users" className={getNavLinkClass}>
-            <FaUsers className="h-5 w-5 mr-3" />
-            Users
-          </NavLink>
-          <NavLink to="/dashboard/add-product" className={getNavLinkClass}>
-            <FaShoppingCart className="h-5 w-5 mr-3" />
-            Add Product
-          </NavLink>
-          <NavLink to="/dashboard/all-products" className={getNavLinkClass}>
-            <LuLibraryBig className="h-5 w-5 mr-3" />
-            All Products
-          </NavLink>
+          {user?.role === "admin" && (
+            <NavLink to="/dashboard/users" className={getNavLinkClass}>
+              <FaUsers className="h-5 w-5 mr-3" />
+              Users
+            </NavLink>
+          )}
+          {user?.role === "seller" && (
+            <>
+              <NavLink to="/dashboard/add-product" className={getNavLinkClass}>
+                <FaShoppingCart className="h-5 w-5 mr-3" />
+                Add Product
+              </NavLink>
+              <NavLink to="/dashboard/all-products" className={getNavLinkClass}>
+                <LuLibraryBig className="h-5 w-5 mr-3" />
+                All Products
+              </NavLink>
+            </>
+          )}
           <NavLink to="/" className={getNavLinkClass}>
             <FaHome className="h-5 w-5 mr-3" />
             Home

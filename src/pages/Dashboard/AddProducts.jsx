@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/share/Button";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useUserData from "../../hooks/useUserData";
 
 const AddProducts = () => {
   const {
@@ -9,9 +11,31 @@ const AddProducts = () => {
     formState: { errors },
   } = useForm();
   // const [images, setImages] = useState([]);
+  const useAxios = useAxiosPublic();
+  const userId = useUserData();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const brand = data.brand;
+    const category = data.category;
+    const description = data.description;
+    const imageLink = data.imageLink;
+    const name = data.name;
+    const price = data.price;
+    const stock = data.stock;
+    const user = userId._id;
+
+    const product = {
+      brand,
+      category,
+      description,
+      imageLink,
+      name,
+      price,
+      stock,
+    };
+
+    const res = await useAxios.post("/products", { ...product, user });
+    console.log(res);
   };
 
   // const handleImageChange = (e) => {
@@ -57,9 +81,9 @@ const AddProducts = () => {
             <option disabled value="">
               Select a category
             </option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="books">Books</option>
+            <option value="electronics">Camera</option>
+            <option value="clothing">tools</option>
+            <option value="books">accessories</option>
             {/* Add more categories as needed */}
           </select>
           {errors.category && (
