@@ -29,7 +29,7 @@ const Users = () => {
   if (loading) {
     return <Loading />;
   }
-
+  console.log(users);
   return (
     <div className="overflow-x-auto">
       <h1 className="text-2xl font-bold mb-4">Users</h1>
@@ -43,6 +43,7 @@ const Users = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Status</th>
               <th>action</th>
             </tr>
           </thead>
@@ -53,24 +54,34 @@ const Users = () => {
                 <th>{index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
+                <td>{user.role}</td>
                 <td>
-                  <select className="select select-sm">
+                  <>
                     {user.role === "admin" ? (
-                      <option value="buyer">admin</option>
+                      <option value="buyer">Admin Approve</option>
                     ) : (
-                      <>
-                        <option value="buyer" selected={user.role === "buyer"}>
-                          Buyer
+                      <select className="select select-sm">
+                        <option
+                          value="pending"
+                          selected={user.status === "pending"}
+                        >
+                          Pending
                         </option>
                         <option
-                          value="seller"
-                          selected={user.role === "seller"}
+                          value="approved"
+                          selected={user.status === "approved"}
                         >
-                          Seller
+                          Approved
                         </option>
-                      </>
+                        <option
+                          value="block"
+                          selected={user.status === "block"}
+                        >
+                          block
+                        </option>
+                      </select>
                     )}
-                  </select>
+                  </>
                 </td>
                 <td>
                   <button className="btn text-lg hover:bg-optional-color bg-red-600 text-white btn-sm">

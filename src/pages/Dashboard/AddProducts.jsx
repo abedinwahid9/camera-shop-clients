@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/share/Button";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useUserData from "../../hooks/useUserData";
+import { useContext } from "react";
+import { DataContext } from "../../DataProvider/DataProvider";
 
 const AddProducts = () => {
   const {
@@ -13,6 +15,7 @@ const AddProducts = () => {
   // const [images, setImages] = useState([]);
   const useAxios = useAxiosPublic();
   const userId = useUserData();
+  const { refresh } = useContext(DataContext);
 
   const onSubmit = async (data) => {
     const brand = data.brand;
@@ -37,7 +40,7 @@ const AddProducts = () => {
     const res = await useAxios.post("/products", { ...product, user });
     if (res.status === 201) {
       reset();
-      console.log(res);
+      refresh();
     }
   };
 

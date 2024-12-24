@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useUserData from "../../hooks/useUserData";
+import useAuth from "../../hooks/useAuth";
+import Loading from "../Loading/Loading";
 
 const Overview = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-
+  const [productData, setProductData] = useState([]);
+  const [loadingData, setLoadingData] = useState(false);
+  const { user: singleUser, loading } = useAuth();
   const useAxios = useAxiosPublic();
-
   const user = useUserData();
+
   const admin = user?.role === "admin";
+  const seller = user?.role === "seller";
 
   // Fetch users
   const fetchUsers = async () => {
@@ -20,10 +25,30 @@ const Overview = () => {
       setError(err.message);
     }
   };
-  console.log(users);
+
+  const refresh = useCallback(async () => {
+    setLoadingData(true);
+    try {
+      const res = await useAxios.get(`/products/single/${singleUser.email}`);
+      setProductData(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingData(false);
+    }
+  }, [useAxios, singleUser.email]);
+
   useEffect(() => {
     fetchUsers();
-  }, []);
+    refresh();
+  }, [refresh]);
+
+  if (loading) {
+    return <Loading />;
+  }
+  if (loadingData) {
+    return <Loading />;
+  }
 
   return (
     <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
@@ -48,12 +73,16 @@ const Overview = () => {
             <p className="text-3xl font-bold text-purple-600">{users.length}</p>
           </div>
         )}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">
-            Total Products
-          </h2>
-          <p className="text-3xl font-bold text-orange-600">0</p>
-        </div>
+        {seller && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-lg font-semibold text-gray-700 mb-2">
+              Total Products
+            </h2>
+            <p className="text-3xl font-bold text-orange-600">
+              {productData.length}
+            </p>
+          </div>
+        )}
       </div>
     </main>
   );

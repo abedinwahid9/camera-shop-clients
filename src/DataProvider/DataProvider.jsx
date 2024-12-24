@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const DataContext = createContext(null);
@@ -9,21 +9,30 @@ const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const useAxios = useAxiosPublic();
 
-  useEffect(() => {
-    const data = async () => {
-      setLoading(true);
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
       const res = await useAxios.get("/products");
       setProductData(res.data);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    } finally {
       setLoading(false);
-    };
-    data();
+    }
   }, [useAxios]);
 
+  // Automatically fetch data on mount
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Include the refresh function in the context
   const data = {
     toggleSidebar,
     setToggleSidebar,
     productData,
     loading,
+    refresh: fetchData, // Expose the refresh function
   };
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;

@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 
 const useUserData = () => {
   const { user, loading } = useAuth();
-  const [userData, setUserdata] = useState(null);
+  const [userData, setUserdata] = useState([]);
   const useAxios = useAxiosPublic();
 
   useEffect(() => {
