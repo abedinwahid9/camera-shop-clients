@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { MdDeleteForever } from "react-icons/md";
 import Loading from "../Loading/Loading";
@@ -11,7 +11,7 @@ const Users = () => {
   const useAxios = useAxiosPublic();
 
   // Fetch users
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const res = await useAxios.get("/users");
@@ -20,8 +20,8 @@ const Users = () => {
     } catch (err) {
       setError(err.message);
     }
-  };
-  console.log(users);
+  }, [useAxios]);
+
   useEffect(() => {
     fetchUsers();
   }, []); // Empty dependency array to run only once on component mount
@@ -29,7 +29,13 @@ const Users = () => {
   if (loading) {
     return <Loading />;
   }
-  console.log(users);
+
+  const handleStatus = async (data, status) => {
+    const res = await useAxios.patch(`/users/${data}`, { status });
+    console.log(res);
+    fetchUsers();
+  };
+
   return (
     <div className="overflow-x-auto">
       <h1 className="text-2xl font-bold mb-4">Users</h1>
@@ -60,7 +66,12 @@ const Users = () => {
                     {user.role === "admin" ? (
                       <option value="buyer">Admin Approve</option>
                     ) : (
-                      <select className="select select-sm">
+                      <select
+                        onChange={(e) => {
+                          handleStatus(user._id, e.target.value);
+                        }}
+                        className="select select-sm"
+                      >
                         <option
                           value="pending"
                           selected={user.status === "pending"}
