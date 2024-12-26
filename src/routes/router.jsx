@@ -14,6 +14,8 @@ import AllProducts from "../pages/Dashboard/AllProducts";
 import PrivateRoutes from "./private/PrivateRoutes";
 import AdminRoutes from "./private/AdminRoutes";
 import SellerRoutes from "./private/SellerRoutes";
+import PublicRoutes from "./private/PublicRoutes";
+import Cart from "../pages/Cart";
 
 export const router = createBrowserRouter([
   {
@@ -37,12 +39,24 @@ export const router = createBrowserRouter([
         element: <ContactUs />,
       },
       {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
         path: "/login",
-        element: <Login />,
+        element: (
+          <PublicRoutes>
+            <Login />
+          </PublicRoutes>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <PublicRoutes>
+            <Register />
+          </PublicRoutes>
+        ),
       },
     ],
   },
@@ -60,7 +74,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/add-product",
-        element: <AddProducts />,
+        element: (
+          <SellerRoutes>
+            <AddProducts />
+          </SellerRoutes>
+        ),
       },
       {
         path: "/dashboard/users",

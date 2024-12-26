@@ -8,6 +8,7 @@ const DataProvider = ({ children }) => {
   const [productData, setProductData] = useState(null);
   const [loading, setLoading] = useState(false);
   const useAxios = useAxiosPublic();
+  const cart = [];
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -32,6 +33,7 @@ const DataProvider = ({ children }) => {
     setToggleSidebar,
     productData,
     loading,
+    cart,
     refresh: fetchData, // Expose the refresh function
   };
 

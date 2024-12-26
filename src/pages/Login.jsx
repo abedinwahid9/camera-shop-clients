@@ -6,10 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import GoogleAuth from "../components/share/GoogleAuth.jsx";
+import useAxiosPublic from "../hooks/useAxiosPublic.jsx";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { LoginUser } = useAuth();
+  const useAxios = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -19,8 +21,14 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleForm = (data) => {
-    LoginUser(data.email, data.password).then((user) => {
-      if (user) {
+    LoginUser(data.email, data.password).then(async (user) => {
+      if (user.user) {
+        const jwt = await useAxios.post("/jwt/authentication", {
+          email: user.user.email,
+        });
+        if (jwt.status === 200) {
+          localStorage.setItem("access-token", jwt.data.token);
+        }
         reset();
         navigate("/");
       }

@@ -31,7 +31,9 @@ const AuthProvider = ({ children }) => {
   };
 
   const LogOut = () => {
-    signOut(auth);
+    signOut(auth).then(() => {
+      localStorage.removeItem("access-token");
+    });
   };
 
   // google login
@@ -43,16 +45,6 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        // axios
-        //   .post(`http://localhost:4000/authentication`, {
-        //     email: currentUser.email,
-        //   })
-        //   .then((data) => {
-        //     if (data.data) {
-        //       localStorage.setItem("access-token", data?.data?.token);
-        //       setLoading(false);
-        //     }
-        //   });
         setLoading(false);
       } else {
         localStorage.removeItem("access-token");

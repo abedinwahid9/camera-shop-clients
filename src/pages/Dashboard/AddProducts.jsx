@@ -37,7 +37,14 @@ const AddProducts = () => {
       stock,
     };
 
-    const res = await useAxios.post("/products", { ...product, user });
+    const token = localStorage.getItem("access-token");
+
+    const res = await useAxios.post(
+      "/products",
+      { ...product, user },
+      { headers: { authorization: `Bearer ${token}` } }
+    );
+
     if (res.status === 201) {
       reset();
       refresh();

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { MdDeleteForever } from "react-icons/md";
 import Loading from "../Loading/Loading";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -30,10 +31,22 @@ const Users = () => {
     return <Loading />;
   }
 
-  const handleStatus = async (data, status) => {
+  // change seller and buyer status
+  const handleStatus = async (data, name, status) => {
     const res = await useAxios.patch(`/users/${data}`, { status });
-    console.log(res);
-    fetchUsers();
+    if (res.status === 200) {
+      Swal.fire(`${name} is ${status} successfully`);
+      fetchUsers();
+    }
+  };
+
+  // delete any users
+  const handleDelete = async (id, user) => {
+    const res = await useAxios.delete(`/users/${id}`);
+    if (res.status === 200) {
+      Swal.fire(`${user} is delete successfully`);
+      fetchUsers();
+    }
   };
 
   return (
@@ -68,7 +81,7 @@ const Users = () => {
                     ) : (
                       <select
                         onChange={(e) => {
-                          handleStatus(user._id, e.target.value);
+                          handleStatus(user._id, user.name, e.target.value);
                         }}
                         className="select select-sm"
                       >
@@ -95,7 +108,12 @@ const Users = () => {
                   </>
                 </td>
                 <td>
-                  <button className="btn text-lg hover:bg-optional-color bg-red-600 text-white btn-sm">
+                  <button
+                    onClick={() => {
+                      handleDelete(user._id, user.name);
+                    }}
+                    className="btn text-lg hover:bg-optional-color bg-red-600 text-white btn-sm"
+                  >
                     <MdDeleteForever />
                   </button>
                 </td>
