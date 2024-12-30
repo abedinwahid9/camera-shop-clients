@@ -7,10 +7,13 @@ import Button from "../share/Button";
 import { FaCartArrowDown, FaRegHeart } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
 import useUserData from "../../hooks/useUserData";
+import { useContext } from "react";
+import { DataContext } from "../../DataProvider/DataProvider";
 
 const Navbar = () => {
   const { user, LogOut } = useAuth();
   const userData = useUserData();
+  const { cart } = useContext(DataContext);
   const role = userData?.role !== "buyer";
 
   const navList = [
@@ -91,12 +94,14 @@ const Navbar = () => {
       <div className="navbar-end">
         <div className="flex justify-center items-center gap-5">
           <div className="flex">
-            <Link to="/cart">
-              <div className="badge bg-secondary-color text-white border-secondary-color font-semibold">
-                +99
-              </div>
-              <FaCartArrowDown className="text-3xl font-bold text-secondary-color" />
-            </Link>
+            {!role && (
+              <Link to="/cart">
+                <div className="badge bg-secondary-color text-white border-secondary-color font-semibold">
+                  {cart?.length}
+                </div>
+                <FaCartArrowDown className="text-3xl font-bold text-secondary-color" />
+              </Link>
+            )}
           </div>
           {user ? (
             <div className="dropdown dropdown-bottom dropdown-end">

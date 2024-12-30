@@ -14,9 +14,12 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../Logo";
 import { LuLibraryBig } from "react-icons/lu";
 import useUserData from "../../../hooks/useUserData";
+import { useContext } from "react";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const Sidebar = () => {
   const { toggleSidebar, setToggleSidebar } = useData();
+  const { LogOut } = useContext(AuthContext);
 
   const user = useUserData();
 
@@ -74,8 +77,11 @@ const Sidebar = () => {
             Home
           </NavLink>
         </nav>
-        <div className="absolute bottom-0 w-full">
-          <div className="flex items-center py-4 px-6 text-gray-600 hover:bg-gray-200 hover:bg-opacity-25 hover:text-gray-700">
+        <div className="absolute bottom-0 w-full cursor-pointer">
+          <div
+            onClick={() => LogOut()}
+            className="flex items-center py-4 px-6 text-gray-600 hover:bg-gray-200 hover:bg-opacity-25 hover:text-gray-700"
+          >
             <FaSignOutAlt className="h-5 w-5 mr-3" />
             Logout
           </div>

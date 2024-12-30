@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div>
       <Banner />
-      <div className="md:mx-5 mx-2">
+      <div className="md:px-5 px-2">
         <AdsSection firstAds={firstAds} />
         <FeatureProducts />
         <AdsSection firstAds={secondeAds} />

@@ -1,19 +1,19 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom"; // For navigation
+import { Link, useNavigate } from "react-router-dom"; // For navigation
 
 import { FaTrash } from "react-icons/fa";
 import Button from "../components/share/Button";
 import { DataContext } from "../DataProvider/DataProvider";
+import Swal from "sweetalert2";
 
 const Cart = () => {
-  const { cart } = useContext(DataContext);
-
-  const [cartItems, setCartItems] = useState(cart);
+  const { cart: cartItems, setCart } = useContext(DataContext);
+  const navigate = useNavigate();
 
   // Function to remove an item from the cart
   const removeFromCart = (itemId) => {
     const updatedCart = cartItems.filter((item) => item._id !== itemId);
-    setCartItems(updatedCart);
+    setCart(updatedCart);
   };
 
   // Function to calculate the total price
@@ -22,6 +22,12 @@ const Cart = () => {
       (total, item) => total + item.price * item.quantity,
       0
     );
+  };
+
+  const handleCheckout = () => {
+    Swal.fire("order place done");
+    setCart([]);
+    navigate("/");
   };
 
   return (
@@ -47,7 +53,9 @@ const Cart = () => {
                 />
                 <div>
                   <h3 className="text-lg font-semibold">{item.name}</h3>
-                  <p className="text-sm text-gray-500">Price: ${item.price}</p>
+                  <p className="text-sm text-gray-500">
+                    Price: {item.price} tk
+                  </p>
                   <p className="text-sm text-gray-500">
                     Quantity: {item.quantity}
                   </p>
@@ -73,11 +81,14 @@ const Cart = () => {
           </p>
 
           <div className="mt-4 flex gap-4">
-            <Link to="/checkout">
+            <Link
+              onClick={handleCheckout}
+              //  to="/checkout"
+            >
               <Button title="Proceed to Checkout" />
             </Link>
             <button
-              onClick={() => setCartItems([])} // Clear cart
+              onClick={() => setCart([])} // Clear cart
               className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600"
             >
               Clear Cart

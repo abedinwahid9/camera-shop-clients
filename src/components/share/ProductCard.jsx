@@ -7,7 +7,7 @@ import { DataContext } from "../../DataProvider/DataProvider";
 import Swal from "sweetalert2";
 
 const ProductCard = ({ data }) => {
-  const { cart } = useContext(DataContext);
+  const { cart, setCart } = useContext(DataContext);
 
   const handleCart = () => {
     const check = cart.find((item) => item._id === data._id);
@@ -15,7 +15,7 @@ const ProductCard = ({ data }) => {
     if (check) {
       Swal.fire("this product already add");
     } else {
-      cart.push(data);
+      setCart((prevState) => [...prevState, { ...data, quantity: 1 }]);
     }
   };
 
@@ -25,7 +25,7 @@ const ProductCard = ({ data }) => {
         {data?.name.slice(0, 15)}
       </h2>
       <img
-        className="h-56 w-full object-cover"
+        className="h-56 w-full object-contain"
         src={data?.imageLink}
         alt="Shoes"
       />

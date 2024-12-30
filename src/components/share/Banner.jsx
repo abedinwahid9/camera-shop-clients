@@ -39,7 +39,7 @@ const Banner = () => {
   return (
     <div
       ref={sliderRef}
-      className="keen-slider overflow-x-hidden shadow-lg shadow-secondary-color"
+      className="keen-slider !w-full !h-full overflow-x-hidden shadow-lg shadow-secondary-color"
     >
       <div className="keen-slider__slide number-slide1">
         <img className="w-full h-full" src={banner1} alt="banner1" />

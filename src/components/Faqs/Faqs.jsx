@@ -30,7 +30,7 @@ const Faqs = () => {
   ];
 
   return (
-    <div className="md:mx-5 mx-2">
+    <div className="md:px-5 px-2">
       <Title title="frequently asked question" />
       <div>
         {quses?.map((qus) => {

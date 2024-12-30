@@ -16,6 +16,7 @@ import AdminRoutes from "./private/AdminRoutes";
 import SellerRoutes from "./private/SellerRoutes";
 import PublicRoutes from "./private/PublicRoutes";
 import Cart from "../pages/Cart";
+import UpdateProduct from "../pages/Dashboard/UpdateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,14 @@ export const router = createBrowserRouter([
         element: (
           <SellerRoutes>
             <AddProducts />
+          </SellerRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/edit-product",
+        element: (
+          <SellerRoutes>
+            <UpdateProduct />
           </SellerRoutes>
         ),
       },
