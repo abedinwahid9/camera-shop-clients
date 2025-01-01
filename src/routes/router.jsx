@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/edit-product",
+        path: "/dashboard/edit-product/:id",
         element: (
           <SellerRoutes>
             <UpdateProduct />

@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/share/Button";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useUserData from "../../hooks/useUserData";
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { DataContext } from "../../DataProvider/DataProvider";
+import { useParams } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 const UpdateProduct = () => {
   const {
@@ -16,6 +18,37 @@ const UpdateProduct = () => {
   const useAxios = useAxiosPublic();
   const userId = useUserData();
   const { refresh } = useContext(DataContext);
+  const { id } = useParams();
+  const [pData, setPdata] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const getProduct = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await useAxios.get(`/products/${id}`);
+      setPdata(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (pData) {
+      reset({
+        name: pData.name,
+        category: pData.category,
+        brand: pData.brand,
+        price: pData.price,
+        stock: pData.stock,
+        description: pData.description,
+        imageLink: pData.imageLink,
+      });
+    } else {
+      getProduct();
+    }
+  }, [getProduct, reset, pData]);
 
   const onSubmit = async (data) => {
     const brand = data.brand;
@@ -38,22 +71,26 @@ const UpdateProduct = () => {
     };
 
     const token = localStorage.getItem("access-token");
+    console.log(product);
+    // const res = await useAxios.post(
+    //   "/products",
+    //   { ...product, user },
+    //   { headers: { authorization: `Bearer ${token}` } }
+    // );
 
-    const res = await useAxios.post(
-      "/products",
-      { ...product, user },
-      { headers: { authorization: `Bearer ${token}` } }
-    );
-
-    if (res.status === 201) {
-      reset();
-      refresh();
-    }
+    // if (res.status === 201) {
+    //   reset();
+    //   refresh();
+    // }
   };
 
   // const handleImageChange = (e) => {
   //   setImages(Array.from(e.target.files));
   // };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <form

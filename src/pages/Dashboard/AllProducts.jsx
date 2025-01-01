@@ -60,7 +60,6 @@ const AllProducts = () => {
       }
     });
   };
-  console.log(productData);
 
   return (
     <div className="overflow-x-auto">
@@ -113,7 +112,7 @@ const AllProducts = () => {
                   <td>{data?.stock}</td>
                   <td className="flex flex-col">
                     <Link
-                      to="/dashboard/edit-product"
+                      to={`/dashboard/edit-product/${data?._id}`}
                       className="btn text-lg hover:bg-optional-color bg-secondary-color text-white btn-sm"
                     >
                       <RiEdit2Fill />
