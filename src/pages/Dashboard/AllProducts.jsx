@@ -1,12 +1,12 @@
 import { MdDeleteForever } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import useUserData from "../../hooks/useUserData";
 import Loading from "../Loading/Loading";
 
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useCallback, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const AllProducts = () => {
   const [productData, setProductData] = useState([]);
@@ -38,10 +38,27 @@ const AllProducts = () => {
   }
 
   const handleDelete = async (e) => {
-    const res = await useAxios.delete(`/products/${e}`);
-    if (res.status) {
-      refresh();
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: `Your products ${e} has been deleted.`,
+          icon: "success",
+        });
+        const res = await useAxios.delete(`/products/${e}`);
+        if (res.status) {
+          refresh();
+        }
+      }
+    });
   };
   console.log(productData);
 
@@ -95,7 +112,10 @@ const AllProducts = () => {
                   <td>{data?.price}</td>
                   <td>{data?.stock}</td>
                   <td className="flex flex-col">
-                    <Link className="btn text-lg hover:bg-optional-color bg-secondary-color text-white btn-sm">
+                    <Link
+                      to="/dashboard/edit-product"
+                      className="btn text-lg hover:bg-optional-color bg-secondary-color text-white btn-sm"
+                    >
                       <RiEdit2Fill />
                     </Link>
                     <button
