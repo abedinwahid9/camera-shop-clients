@@ -2,9 +2,8 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/share/Button";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useUserData from "../../hooks/useUserData";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { DataContext } from "../../DataProvider/DataProvider";
-import { useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 
 const UpdateProduct = () => {
@@ -17,10 +16,10 @@ const UpdateProduct = () => {
   // const [images, setImages] = useState([]);
   const useAxios = useAxiosPublic();
   const userId = useUserData();
-  const { refresh } = useContext(DataContext);
   const { id } = useParams();
   const [pData, setPdata] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const getProduct = useCallback(async () => {
     try {
@@ -71,17 +70,15 @@ const UpdateProduct = () => {
     };
 
     const token = localStorage.getItem("access-token");
-    console.log(product);
-    // const res = await useAxios.post(
-    //   "/products",
-    //   { ...product, user },
-    //   { headers: { authorization: `Bearer ${token}` } }
-    // );
-
-    // if (res.status === 201) {
-    //   reset();
-    //   refresh();
-    // }
+    const res = await useAxios.patch(
+      `/products/${id}`,
+      { ...product, user },
+      { headers: { authorization: `Bearer ${token}` } }
+    );
+    if (res.status === 200) {
+      getProduct();
+      navigate("/dashboard/all-products");
+    }
   };
 
   // const handleImageChange = (e) => {
@@ -259,7 +256,7 @@ const UpdateProduct = () => {
       </div>
 
       <div type="submit" className="flex items-center justify-center">
-        <Button title="add product" />
+        <Button title="edit product" />
       </div>
     </form>
   );

@@ -5,9 +5,11 @@ import Button from "./Button";
 import { useContext } from "react";
 import { DataContext } from "../../DataProvider/DataProvider";
 import Swal from "sweetalert2";
+import useUserData from "../../hooks/useUserData";
 
 const ProductCard = ({ data }) => {
   const { cart, setCart } = useContext(DataContext);
+  const userId = useUserData();
 
   const handleCart = () => {
     const check = cart.find((item) => item._id === data._id);
@@ -40,9 +42,19 @@ const ProductCard = ({ data }) => {
           <FaRegHeart className="text-2xl text-secondary-color" />
         </div>
 
-        <div onClick={handleCart}>
-          <Button title="buy now" width="w-full" logo={<CiShoppingCart />} />
-        </div>
+        {userId?.role !== "buyer" ? (
+          <button
+            disabled
+            className={`btn text-lg flex justify-center items-center text-white uppercase hover:bg-optional-color bg-secondary-color w-full`}
+          >
+            buy now
+            <CiShoppingCart />
+          </button>
+        ) : (
+          <div onClick={handleCart}>
+            <Button title="buy now" width="w-full" logo={<CiShoppingCart />} />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useUserData from "../../hooks/useUserData";
 import { useContext } from "react";
 import { DataContext } from "../../DataProvider/DataProvider";
+import Swal from "sweetalert2";
 
 const AddProducts = () => {
   const {
@@ -44,10 +45,24 @@ const AddProducts = () => {
       { ...product, user },
       { headers: { authorization: `Bearer ${token}` } }
     );
+    console.log(res);
 
     if (res.status === 201) {
-      reset();
-      refresh();
+      Swal.fire(
+        {
+          title: "add product",
+          icon: "success",
+        },
+        refresh(),
+        reset()
+      );
+    }
+    if (res.status === 203) {
+      Swal.fire({
+        title: "Please wait",
+        text: `${res.data.message}`,
+        icon: "warning",
+      });
     }
   };
 
@@ -222,7 +237,13 @@ const AddProducts = () => {
       </div>
 
       <div type="submit" className="flex items-center justify-center">
-        <Button title="add product" />
+        {userId.status === "pending" ? (
+          <p className="text-xl text-wrap text-red-600 font-semibold">
+            user is pending. admin checking your profile. please wait...
+          </p>
+        ) : (
+          <Button title="add product" />
+        )}
       </div>
     </form>
   );

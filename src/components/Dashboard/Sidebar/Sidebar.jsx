@@ -60,7 +60,7 @@ const Sidebar = () => {
               Users
             </NavLink>
           )}
-          {user?.role === "seller" && (
+          {user?.role === "seller" && user?.status === "approved" && (
             <>
               <NavLink to="/dashboard/add-product" className={getNavLinkClass}>
                 <FaShoppingCart className="h-5 w-5 mr-3" />

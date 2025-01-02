@@ -12,7 +12,7 @@ const SellerRoutes = ({ children }) => {
     return <Loading />;
   }
 
-  if (user && userData?.role === "seller") {
+  if (user && userData?.role === "seller" && userData?.status === "approved") {
     return children;
   }
 

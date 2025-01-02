@@ -83,7 +83,17 @@ const Overview = () => {
             </p>
           </div>
         )}
-      </div>
+      </div>{" "}
+      {user.status === "block" && (
+        <p className="text-xl text-wrap text-red-600 font-semibold">
+          your are temporary blocked. please contact with us.
+        </p>
+      )}
+      {user.status === "pending" && (
+        <p className="text-xl text-wrap text-red-600 font-semibold">
+          user is pending. admin checking your profile. please wait...
+        </p>
+      )}
     </main>
   );
 };

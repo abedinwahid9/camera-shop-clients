@@ -1,4 +1,4 @@
-const Button = ({ title, width, logo }) => {
+const Button = ({ title, width, logo, role }) => {
   return (
     <button
       className={`btn text-lg flex justify-center items-center text-white uppercase hover:bg-optional-color bg-secondary-color ${width}`}
