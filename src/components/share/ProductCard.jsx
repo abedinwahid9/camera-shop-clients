@@ -42,7 +42,7 @@ const ProductCard = ({ data }) => {
           <FaRegHeart className="text-2xl text-secondary-color" />
         </div>
 
-        {userId?.role !== "buyer" ? (
+        {userId?.role === "admin" && userId?.role === "seller" ? (
           <button
             disabled
             className={`btn text-lg flex justify-center items-center text-white uppercase hover:bg-optional-color bg-secondary-color w-full`}

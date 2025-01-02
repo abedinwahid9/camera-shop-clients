@@ -1,10 +1,11 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"; // For navigation
 
 import { FaTrash } from "react-icons/fa";
 import Button from "../components/share/Button";
 import { DataContext } from "../DataProvider/DataProvider";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 const Cart = () => {
   const { cart: cartItems, setCart } = useContext(DataContext);

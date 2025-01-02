@@ -12,9 +12,9 @@ import { DataContext } from "../../DataProvider/DataProvider";
 
 const Navbar = () => {
   const { user, LogOut } = useAuth();
-  const { userData } = useUserData();
+  const userData = useUserData();
   const { cart } = useContext(DataContext);
-  const role = userData?.role !== "buyer";
+  const role = userData?.role === "admin" && userData?.role === "seller";
 
   const navList = [
     {
