@@ -9,6 +9,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import useUserData from "../../hooks/useUserData";
 import { useContext } from "react";
 import { DataContext } from "../../DataProvider/DataProvider";
+import { useTime, useTransform, motion } from "motion/react";
 
 const Navbar = () => {
   const { user, LogOut } = useAuth();
@@ -35,6 +36,14 @@ const Navbar = () => {
     },
   ];
 
+  const time = useTime();
+  const rotate = useTransform(time, [0, 3000], [0, 360], {
+    clamp: false,
+  });
+  const rotateBg = useTransform(rotate, (r) => {
+    return `linear-gradient(${r}deg,#ce713d,#0a578c)`;
+  });
+
   return (
     <header className="navbar container mx-auto ">
       <div className="navbar-start md:w-1/2 w-full ">
@@ -57,7 +66,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="bg-gradient-to-bl from-optional-color  to-primary-color dropdown-content  rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="bg-gradient-to-bl  from-optional-color  to-primary-color dropdown-content  rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             {navList.map((nav, i) => {
               return (
@@ -107,9 +116,19 @@ const Navbar = () => {
             <div className="dropdown dropdown-bottom dropdown-end">
               <div tabIndex={0} role="button">
                 <div className="avatar">
-                  <div className="ring-secondary-color ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                  </div>
+                  <motion.div
+                    className=" w-14 rounded-full p-[5px]"
+                    style={{
+                      background: rotateBg,
+                    }}
+                  >
+                    <div className="bg-white rounded-full">
+                      <img
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                        className="w-10 h-10 rounded-full"
+                      />
+                    </div>
+                  </motion.div>
                 </div>
               </div>
               <ul

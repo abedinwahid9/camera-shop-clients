@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import Title from "../share/Title";
+import { useInView, motion } from "motion/react";
 
 const Faqs = () => {
   const quses = [
@@ -29,8 +31,34 @@ const Faqs = () => {
     },
   ];
 
+  const adsVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
+
+  // Reference for the box container
+  const boxRef = useRef(null);
+
+  // useInView hook to detect when the element is in the viewport
+  const isInView = useInView(boxRef, { triggerOnce: true, threshold: 0.1 });
+
   return (
-    <div className="md:px-5 px-2">
+    <motion.div
+      ref={boxRef}
+      variants={adsVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      className="md:px-5 px-2"
+    >
       <Title title="frequently asked question" />
       <div>
         {quses?.map((qus) => {
@@ -51,7 +79,7 @@ const Faqs = () => {
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

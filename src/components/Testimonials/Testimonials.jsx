@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import TestimonitalsCard from "../share/TestimonitalsCard";
 import { Parallax } from "react-parallax";
 import bg from "../../assets/bg.jpg";
+import { useInView, motion } from "motion/react";
 
 const Testimonials = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -56,8 +57,34 @@ const Testimonials = () => {
     ]
   );
 
+  const adsVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
+
+  // Reference for the box container
+  const boxRef = useRef(null);
+
+  // useInView hook to detect when the element is in the viewport
+  const isInView = useInView(boxRef, { triggerOnce: true, threshold: 0.1 });
+
   return (
-    <div className="navigation-wrapper py-5">
+    <motion.div
+      ref={boxRef}
+      variants={adsVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      className="navigation-wrapper py-5"
+    >
       <Parallax blur={{ min: -15, max: 10 }} bgImage={bg} strength={-100}>
         <h3 className="text-secondary-color font-bold text-3xl capitalize text-center py-5">
           Testimonials
@@ -77,7 +104,7 @@ const Testimonials = () => {
           </div>
         </div>
       </Parallax>
-    </div>
+    </motion.div>
   );
 };
 
