@@ -7,6 +7,7 @@ import {
   FaBars,
   FaTimes,
   FaHome,
+  FaHandHoldingHeart,
 } from "react-icons/fa";
 
 import useData from "../../../hooks/useData";
@@ -16,6 +17,7 @@ import { LuLibraryBig } from "react-icons/lu";
 import useUserData from "../../../hooks/useUserData";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import Loading from "../../../pages/Loading/Loading";
 
 const Sidebar = () => {
   const { toggleSidebar, setToggleSidebar } = useData();
@@ -33,6 +35,10 @@ const Sidebar = () => {
         ? "bg-blue-100 text-blue-700 border-l-4 border-blue-600"
         : "text-gray-600 hover:bg-gray-200 hover:text-gray-700"
     }`;
+
+  if (!user) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -54,6 +60,12 @@ const Sidebar = () => {
             <FaBars className="h-5 w-5 mr-3" />
             Dashboard
           </NavLink>
+          {user?.role === "buyer" && (
+            <NavLink to="/dashboard/wishlist" className={getNavLinkClass}>
+              <FaHandHoldingHeart className="h-5 w-5 mr-3" />
+              Wishlist
+            </NavLink>
+          )}
           {user?.role === "admin" && (
             <NavLink to="/dashboard/users" className={getNavLinkClass}>
               <FaUsers className="h-5 w-5 mr-3" />

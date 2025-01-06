@@ -17,6 +17,7 @@ import SellerRoutes from "./private/SellerRoutes";
 import PublicRoutes from "./private/PublicRoutes";
 import Cart from "../pages/Cart";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct";
+import Wishlist from "../pages/Dashboard/Wishlist";
 
 export const router = createBrowserRouter([
   {
@@ -104,6 +105,10 @@ export const router = createBrowserRouter([
             <AllProducts />
           </SellerRoutes>
         ),
+      },
+      {
+        path: "/dashboard/wishlist",
+        element: <Wishlist />,
       },
     ],
   },

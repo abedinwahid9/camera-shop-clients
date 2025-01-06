@@ -6,19 +6,26 @@ import { useContext } from "react";
 import { DataContext } from "../../DataProvider/DataProvider";
 import Swal from "sweetalert2";
 import useUserData from "../../hooks/useUserData";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const ProductCard = ({ data }) => {
   const { cart, setCart } = useContext(DataContext);
   const userId = useUserData();
+  const useAxios = useAxiosPublic();
 
   const handleCart = () => {
     const check = cart.find((item) => item._id === data._id);
-    console.log(check);
+
     if (check) {
       Swal.fire("this product already add");
     } else {
       setCart((prevState) => [...prevState, { ...data, quantity: 1 }]);
     }
+  };
+
+  // handle wish list
+  const handleWishlist = async () => {
+    const res = await useAxios.put(`/wishlist/${userId._id}`, { id: data._id });
   };
 
   return (
@@ -39,7 +46,9 @@ const ProductCard = ({ data }) => {
             </p>
             <p className="text-lg font-bold">Price: {data?.price} Tk</p>
           </div>
-          <FaRegHeart className="text-2xl text-secondary-color" />
+          <div onClick={handleWishlist}>
+            <FaRegHeart className="text-2xl text-secondary-color" />
+          </div>
         </div>
 
         {userId?.role === "admin" && userId?.role === "seller" ? (

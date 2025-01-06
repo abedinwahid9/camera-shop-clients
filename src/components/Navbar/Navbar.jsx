@@ -130,7 +130,7 @@ const Navbar = () => {
 
                 {!role && (
                   <li>
-                    <Link to="/dashboard/overview">
+                    <Link to="/dashboard/wishlist">
                       <FaRegHeart className="text-secondary-color  text-xl" />{" "}
                       <p>Wishlist</p>
                     </Link>
