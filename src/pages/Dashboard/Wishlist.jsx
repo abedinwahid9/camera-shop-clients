@@ -1,8 +1,6 @@
-import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // For navigation
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { DataContext } from "../../DataProvider/DataProvider";
 import Button from "../../components/share/Button";
 import useDataFetch from "../../hooks/useDataFetch";
 import Loading from "../Loading/Loading";
@@ -10,6 +8,7 @@ import useUserData from "../../hooks/useUserData";
 
 const Wishlist = () => {
   const navigate = useNavigate();
+
   const user = useUserData();
   const { data: cartItems, loading } = useDataFetch(`/wishlist/${user?.email}`);
 
@@ -28,9 +27,9 @@ const Wishlist = () => {
   };
 
   const handleCheckout = () => {
-    Swal.fire("order place done");
+    // Swal.fire("order place done");
     // setCart([]);
-    navigate("/");
+    // navigate("/");
   };
 
   if (loading) {

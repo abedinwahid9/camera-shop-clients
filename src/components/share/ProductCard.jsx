@@ -7,6 +7,7 @@ import { DataContext } from "../../DataProvider/DataProvider";
 import Swal from "sweetalert2";
 import useUserData from "../../hooks/useUserData";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { motion } from "motion/react";
 
 const ProductCard = ({ data }) => {
   const { cart, setCart } = useContext(DataContext);
@@ -29,7 +30,18 @@ const ProductCard = ({ data }) => {
   };
 
   return (
-    <div className="w-full border-secondary-color border-2 rounded-lg flex flex-col justify-between h-full bg-base-100  shadow-lg shadow-secondary-color overflow-hidden">
+    <motion.div
+      whileHover={{
+        scale: 1.05,
+        transition: {
+          duration: 0.5,
+          ease: "easeInOut",
+          type: "spring",
+          stiffness: 200,
+        },
+      }}
+      className="w-full border-secondary-color border-2 rounded-lg flex flex-col justify-between h-full bg-base-100  shadow-lg shadow-secondary-color hover:shadow-primary-color overflow-hidden"
+    >
       <h2 className="text-2xl text-center py-1 capitalize font-semibold ">
         {data?.name.slice(0, 15)}
       </h2>
@@ -65,7 +77,7 @@ const ProductCard = ({ data }) => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

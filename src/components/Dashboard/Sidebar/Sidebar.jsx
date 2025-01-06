@@ -1,8 +1,6 @@
 import {
   FaShoppingCart,
   FaUsers,
-  FaChartBar,
-  FaCogs,
   FaSignOutAlt,
   FaBars,
   FaTimes,
