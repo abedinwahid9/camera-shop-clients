@@ -96,7 +96,7 @@ const Products = () => {
           ))}
         </div>
         {/* Product Grid */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 md:my-10 my-5 gap-3">
+        <div className="grid lg:grid-cols-4 grid-cols-2  md:my-10 my-5 gap-3">
           {filteredProducts?.length > 0 ? (
             filteredProducts.map((data) => (
               <ProductCard key={data._id} data={data} />

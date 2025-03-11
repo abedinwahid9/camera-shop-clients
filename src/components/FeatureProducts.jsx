@@ -73,7 +73,7 @@ const FeatureProducts = () => {
       <Title title="feature products" />
       <div className="grid grid-cols-12 gap-2">
         <div className="lg:col-span-9 col-span-12 order-2 lg:order-1">
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2 w-full h-full">
+          <div className="grid lg:grid-cols-3 grid-cols-2 gap-2 w-full h-full">
             {productData?.slice(0, 6).map((data) => {
               return <ProductCard key={data?._id} data={data} />;
             })}

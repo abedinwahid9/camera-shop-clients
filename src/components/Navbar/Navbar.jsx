@@ -15,8 +15,25 @@ const Navbar = () => {
   const { user, LogOut } = useAuth();
   const userData = useUserData();
   const { cart } = useContext(DataContext);
-  const role = userData?.role === "admin" && userData?.role === "seller";
+  let role;
 
+  switch (userData?.role) {
+    case "admin":
+      role = false;
+      break;
+    case "seller":
+      role = false;
+      break;
+    case undefined:
+      role = true;
+      break;
+    default:
+      role = true;
+  }
+  const handleLogout = () => {
+    LogOut();
+    role = false;
+  };
   const navList = [
     {
       title: "home",
@@ -103,7 +120,7 @@ const Navbar = () => {
       <div className="navbar-end">
         <div className="flex justify-center items-center gap-5">
           <div className="flex">
-            {!role && (
+            {role && (
               <Link to="/cart">
                 <div className="badge bg-secondary-color text-white border-secondary-color font-semibold">
                   {cart?.length}
@@ -138,7 +155,7 @@ const Navbar = () => {
                 <li>
                   <p>{user.email}</p>
                 </li>
-                {role && (
+                {!role && (
                   <li>
                     <Link to="/dashboard/overview">
                       <RiDashboardLine className="text-secondary-color  text-xl" />
@@ -147,7 +164,7 @@ const Navbar = () => {
                   </li>
                 )}
 
-                {!role && (
+                {role && (
                   <li>
                     <Link to="/dashboard/wishlist">
                       <FaRegHeart className="text-secondary-color  text-xl" />{" "}
@@ -155,7 +172,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                 )}
-                <li onClick={() => LogOut()}>
+                <li onClick={handleLogout}>
                   <Button title="logout" />
                 </li>
               </ul>

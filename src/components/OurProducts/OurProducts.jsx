@@ -41,7 +41,7 @@ const OurProducts = () => {
       animate={isInView ? "visible" : "hidden"}
     >
       <Title title="our products" />
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3">
+      <div className="grid lg:grid-cols-4 grid-cols-2 gap-3">
         {productData?.slice(0, 8).map((data) => {
           return <ProductCard key={data?._id} data={data} />;
         })}

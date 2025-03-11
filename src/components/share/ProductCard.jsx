@@ -42,24 +42,26 @@ const ProductCard = ({ data }) => {
       }}
       className="w-full border-secondary-color border-2 rounded-lg flex flex-col justify-between h-full bg-base-100  shadow-lg shadow-secondary-color hover:shadow-primary-color overflow-hidden"
     >
-      <h2 className="text-2xl text-center py-1 capitalize font-semibold ">
+      <h2 className="md:text-2xl text-sm text-center py-1 capitalize font-semibold ">
         {data?.name.slice(0, 15)}
       </h2>
       <img
-        className="h-56 w-full object-contain"
+        className="md:h-56 h-28 w-full object-contain"
         src={data?.imageLink}
         alt="Shoes"
       />
       <div className="w-full h-full py-2 px-2">
         <div className="flex justify-between py-1 ">
           <div>
-            <p className="text-text-color">
+            <p className="text-text-color md:text-base text-xs">
               {data?.description.slice(0, 25)}...
             </p>
-            <p className="text-lg font-bold">Price: {data?.price} Tk</p>
+            <p className="font-bold md:text-lg text-xs">
+              Price: {data?.price} Tk
+            </p>
           </div>
           <div onClick={handleWishlist}>
-            <FaRegHeart className="text-2xl text-secondary-color" />
+            <FaRegHeart className="md:text-2xl text-lg text-secondary-color" />
           </div>
         </div>
 
